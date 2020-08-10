@@ -1,4 +1,4 @@
-import { createReducer, createAction, on, createFeatureSelector, createSelector } from '@ngrx/store';
+import { createReducer, createAction, on, createFeatureSelector, createSelector, Action } from '@ngrx/store';
 import { User } from '../user';
 import * as UserActions from '../state/user.actions';
 
@@ -17,7 +17,8 @@ export const getUserFeatureState = createFeatureSelector<UserState>('user');
 export const getCurrentUser = createSelector(getUserFeatureState, (state) => state.currentUser);
 export const getMaskUserName = createSelector(getUserFeatureState, (state) => state.maskUserName);
 
-export const userReducer = createReducer(
+
+const userReducer = createReducer(
 	initialState,
 	on(UserActions.toggleMaskUserName, (state): UserState => {
 		return {
@@ -26,3 +27,7 @@ export const userReducer = createReducer(
 		};
 	})
 );
+
+export function reducer(state: UserState | undefined, action: Action) {
+	return userReducer(state, action);
+}
