@@ -29,12 +29,12 @@ import { EffectsModule } from '@ngrx/effects';
 		UserModule,
 		AppRoutingModule,
 		StoreModule.forRoot({}, {}),
+		EffectsModule.forRoot([]),
 		StoreDevtoolsModule.instrument({
 			name: 'APM Demo App Devtools',
 			maxAge: 25,
 			logOnly: environment.production
 		}),
-		EffectsModule.forRoot([])
 	],
 	declarations: [
 		AppComponent,
