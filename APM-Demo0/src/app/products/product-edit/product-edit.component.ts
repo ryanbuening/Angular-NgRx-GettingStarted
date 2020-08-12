@@ -11,6 +11,7 @@ import { State, getCurrentProduct } from '../state/product.reducer';
 import * as ProductActions from '../state/product.actions';
 import { tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { updateProduct } from '../state/product.actions';
 
 @Component({
 	selector: 'pm-product-edit',
@@ -115,7 +116,7 @@ export class ProductEditComponent implements OnInit {
 			}
 		} else {
 			// No need to delete, it was never saved
-			this.store.dispatch(ProductActions.clearCurrentProduct())
+			this.store.dispatch(ProductActions.clearCurrentProduct());
 		}
 	}
 
@@ -129,14 +130,11 @@ export class ProductEditComponent implements OnInit {
 
 				if (product.id === 0) {
 					this.productService.createProduct(product).subscribe({
-						next: p => this.store.dispatch(ProductActions.setCurrentProduct({ product: p })),
+						next: p => this.store.dispatch(ProductActions.setCurrentProduct({ currentProductId: p.id })),
 						error: err => this.errorMessage = err
 					});
 				} else {
-					this.productService.updateProduct(product).subscribe({
-						next: p => this.store.dispatch(ProductActions.setCurrentProduct({ product: p })),
-						error: err => this.errorMessage = err
-					});
+					this.store.dispatch(ProductActions.updateProduct({ product }));
 				}
 			}
 		}
