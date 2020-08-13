@@ -6,16 +6,16 @@
 
 	<div
 		class="card-body"
-		*ngIf="products$ | async as products"
+		*ngIf="products"
 	>
 		<div class="list-group">
 			<button
 				class="list-group-item list-group-item-action rounded-0"
 				*ngFor="let product of products"
-				[ngClass]="{'active': product?.id === (selectedProduct$ | async)?.id}"
+				[ngClass]="{'active': product?.id === selectedProduct?.id}"
 				(click)="productSelected(product)"
 			>{{ product.productName }}
-				<ng-container *ngIf="displayProductCode$ | async">
+				<ng-container *ngIf="displayProductCode">
 					({{ product.productCode }})
 				</ng-container>
 			</button>
@@ -30,7 +30,7 @@
 						class="form-check-input"
 						type="checkbox"
 						(change)="checkChanged()"
-						[checked]="displayProductCode$ | async"
+						[checked]="displayProductCode"
 					>
 					Display Product Code
 				</label>
@@ -47,7 +47,7 @@
 	</div>
 </div>
 <div
-	*ngIf="errorMessage$ | async as errorMessage"
+	*ngIf="errorMessage"
 	class="alert alert-danger"
 >
 	Error: {{ errorMessage }}

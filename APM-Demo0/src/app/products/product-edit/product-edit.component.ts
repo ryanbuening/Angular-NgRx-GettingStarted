@@ -1,17 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-import { Product } from '../product';
-import { ProductService } from '../product.service';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { GenericValidator } from '../../shared/generic-validator';
 import { NumberValidators } from '../../shared/number.validator';
-
-import { Store } from '@ngrx/store';
-import { State, getCurrentProduct } from '../state/product.reducer';
-import * as ProductActions from '../state/product.actions';
-import { tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
-import { updateProduct } from '../state/product.actions';
+import { Product } from '../product';
+import { ProductService } from '../product.service';
+import { getCurrentProduct, State } from '../state';
+import { ProductPageActions } from '../state/actions';
 
 @Component({
 	selector: 'pm-product-edit',
@@ -110,14 +107,14 @@ export class ProductEditComponent implements OnInit {
 		if (product && product.id) {
 			if (confirm(`Really delete the product: ${product.productName}?`)) {
 				// this.productService.deleteProduct(product.id).subscribe({
-				// 	next: () => this.store.dispatch(ProductActions.clearCurrentProduct()),
+				// 	next: () => this.store.dispatch(ProductPageActions.clearCurrentProduct()),
 				// 	error: err => this.errorMessage = err
 				// });
-				this.store.dispatch(ProductActions.deleteProduct({ product }));
+				this.store.dispatch(ProductPageActions.deleteProduct({ product }));
 			}
 		} else {
 			// No need to delete, it was never saved
-			this.store.dispatch(ProductActions.clearCurrentProduct());
+			this.store.dispatch(ProductPageActions.clearCurrentProduct());
 		}
 	}
 
@@ -130,9 +127,9 @@ export class ProductEditComponent implements OnInit {
 				const product = { ...originalProduct, ...this.productForm.value };
 
 				if (product.id === 0) {
-					this.store.dispatch(ProductActions.createProduct({ product }));
+					this.store.dispatch(ProductPageActions.createProduct({ product }));
 				} else {
-					this.store.dispatch(ProductActions.updateProduct({ product }));
+					this.store.dispatch(ProductPageActions.updateProduct({ product }));
 				}
 			}
 		}
