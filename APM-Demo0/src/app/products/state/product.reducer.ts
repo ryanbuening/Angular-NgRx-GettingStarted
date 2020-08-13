@@ -107,4 +107,32 @@ export const productReducer = createReducer<ProductState>(
 			error: action.error
 		};
 	}),
+	on(ProductActions.createProductSuccess, (state, action): ProductState => {
+		return {
+			...state,
+			products: state.products.concat(action.product),
+			currentProductId: action.product.id,
+			error: ''
+		};
+	}),
+	on(ProductActions.updateProductFailure, (state, action): ProductState => {
+		return {
+			...state,
+			error: action.error
+		};
+	}),
+	on(ProductActions.deleteProductSuccess, (state, action): ProductState => {
+		return {
+			...state,
+			products: state.products.filter(product => product.id !== action.product.id),
+			currentProductId: null,
+			error: ''
+		};
+	}),
+	on(ProductActions.deleteProductFailure, (state, action): ProductState => {
+		return {
+			...state,
+			error: action.error
+		};
+	}),
 );
