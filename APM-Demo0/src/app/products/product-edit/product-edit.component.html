@@ -1,6 +1,6 @@
 <div
 	class="card"
-	*ngIf="product$ | async as product"
+	*ngIf="selectedProduct"
 >
 	<div class="card-header">
 		{{pageTitle}}
@@ -8,7 +8,7 @@
 	<div class="card-body">
 		<form
 			novalidate
-			(ngSubmit)="saveProduct(product)"
+			(ngSubmit)="saveProduct(selectedProduct)"
 			[formGroup]="productForm"
 		>
 			<fieldset>
@@ -128,7 +128,7 @@
 								class="btn btn-light"
 								type="button"
 								style="width:80px;margin-right:10px"
-								(click)="cancelEdit(product)"
+								(click)="cancelEdit(selectedProduct)"
 							>
 								Cancel
 							</button>
@@ -138,7 +138,7 @@
 								class="btn btn-light"
 								type="button"
 								style="width:80px"
-								(click)="deleteProduct(product)"
+								(click)="deleteProduct()"
 							>
 								Delete
 							</button>

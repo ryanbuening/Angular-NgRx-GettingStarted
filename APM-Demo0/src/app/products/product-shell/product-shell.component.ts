@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from '../product';
 import { Store } from '@ngrx/store';
-import { State, getShowProductCode, getCurrentProduct, getProducts, getError } from '../state';
 import { Observable } from 'rxjs';
+import { Product } from '../product';
+import { getCurrentProduct, getError, getProducts, getShowProductCode, State } from '../state';
 import { ProductPageActions } from '../state/actions';
 
 @Component({
@@ -35,5 +35,21 @@ export class ProductShellComponent implements OnInit {
 
 	productSelected(product: Product): void {
 		this.store.dispatch(ProductPageActions.setCurrentProduct({ currentProductId: product.id }));
+	}
+
+	deleteProduct(product: Product): void {
+		this.store.dispatch(ProductPageActions.deleteProduct({ product }));
+	}
+
+	saveProduct(product: Product): void {
+		this.store.dispatch(ProductPageActions.createProduct({ product }));
+	}
+
+	updateProduct(product: Product): void {
+		this.store.dispatch(ProductPageActions.updateProduct({ product }));
+	}
+
+	clearProduct(): void {
+		this.store.dispatch(ProductPageActions.clearCurrentProduct());
 	}
 }
