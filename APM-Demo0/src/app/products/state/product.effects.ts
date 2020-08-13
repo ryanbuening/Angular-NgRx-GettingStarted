@@ -14,10 +14,11 @@ export class ProductEffects {
 		return this.actions$.pipe(
 			ofType(ProductActions.loadProducts),
 			mergeMap(() =>
-				this.productServce.getProducts().pipe(
-					map(products => ProductActions.loadProductsSuccess({ products })),
-					catchError(error => of(ProductActions.loadProductsFailure({ error })))
-				)
+				this.productServce.getProducts()
+					.pipe(
+						map(products => ProductActions.loadProductsSuccess({ products })),
+						catchError(error => of(ProductActions.loadProductsFailure({ error })))
+					)
 			),
 		);
 	});
@@ -26,9 +27,11 @@ export class ProductEffects {
 		return this.actions$.pipe(
 			ofType(ProductActions.updateProduct),
 			concatMap((action) =>
-				this.productServce.updateProduct(action.product).pipe(
-					map(product => ProductActions.updateProductSuccess({ product })),
-					catchError(error => of(ProductActions.updateProductFailure({ error }))))
+				this.productServce.updateProduct(action.product)
+					.pipe(
+						map(product => ProductActions.updateProductSuccess({ product })),
+						catchError(error => of(ProductActions.updateProductFailure({ error })))
+					)
 			),
 		);
 	});
@@ -37,9 +40,11 @@ export class ProductEffects {
 		return this.actions$.pipe(
 			ofType(ProductActions.createProduct),
 			concatMap((action) =>
-				this.productServce.createProduct(action.product).pipe(
-					map(product => ProductActions.createProductSuccess({ product })),
-					catchError(error => of(ProductActions.createProductFailure({ error }))))
+				this.productServce.createProduct(action.product)
+					.pipe(
+						map(product => ProductActions.createProductSuccess({ product })),
+						catchError(error => of(ProductActions.createProductFailure({ error })))
+					)
 			),
 		);
 	});
@@ -48,9 +53,11 @@ export class ProductEffects {
 		return this.actions$.pipe(
 			ofType(ProductActions.deleteProduct),
 			mergeMap((action) =>
-				this.productServce.deleteProduct(action.product.id).pipe(
-					map(product => ProductActions.deleteProductSuccess({ product: action.product })),
-					catchError(error => of(ProductActions.deleteProductFailure({ error }))))
+				this.productServce.deleteProduct(action.product.id)
+					.pipe(
+						map(() => ProductActions.deleteProductSuccess({ product: action.product })),
+						catchError(error => of(ProductActions.deleteProductFailure({ error })))
+					)
 			),
 		);
 	});

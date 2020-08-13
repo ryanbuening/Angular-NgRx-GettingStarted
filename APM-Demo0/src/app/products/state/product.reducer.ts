@@ -22,9 +22,9 @@ const initialState: ProductState = {
 	error: ''
 };
 
+// ** Selectors **//
+
 export const getProductFeatureState = createFeatureSelector<ProductState>('products');
-
-
 
 export const getShowProductCode = createSelector(getProductFeatureState, (state) => state.showProductCode);
 
